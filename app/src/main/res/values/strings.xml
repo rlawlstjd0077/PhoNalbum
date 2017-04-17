@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">PhoNalbum</string>
-
     <!-- Labels -->
     <string name="search_noresults">No results were found for your search</string>
+    <string name="action_all_list">All List</string>
+    <string name="action_favorite">Favorite List</string>
+
+    <string name="dialog_call">Call</string>
+    <string name="dialog_message">Send Message</string>
+    <string name="dialog_remove">Remove</string>
+    <string name="dialog_call_description">Call this person now</string>
+    <string name="dialog_message_description">Send Message</string>
+    <string name="dialog_remove_description">Remove this number now</string>
+    <string name="transition_app_icon" translatable="false">App Icon Transition</string>
 </resources>

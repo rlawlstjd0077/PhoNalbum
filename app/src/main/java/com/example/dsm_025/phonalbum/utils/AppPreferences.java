@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.dsm_025.phonalbum.R;
+
 /**
  * Created by dsm_025 on 2017-04-12.
  */
@@ -20,6 +22,15 @@ public class AppPreferences {
         this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         this.editor = sharedPreferences.edit();
         this.context = context;
+    }
+
+    public int getPrimaryColorPref() {
+        return sharedPreferences.getInt(KeyPrimaryColor, context.getResources().getColor(R.color.primary));
+    }
+
+    public void setPrimaryColorPref(Integer res) {
+        editor.putInt(KeyPrimaryColor, res);
+        editor.commit();
     }
 
     public String getCustomPath(){

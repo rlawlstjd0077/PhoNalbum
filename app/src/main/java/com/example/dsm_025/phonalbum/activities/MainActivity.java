@@ -8,34 +8,46 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.dsm_025.phonalbum.R;
+import com.example.dsm_025.phonalbum.adapters.NumberAdapter;
+import com.example.dsm_025.phonalbum.utils.AppPreferences;
 import com.example.dsm_025.phonalbum.utils.UtilsApp;
+import com.example.dsm_025.phonalbum.utils.UtilsUI;
+import com.mikepenz.materialdrawer.Drawer;
 import com.pnikosis.materialishprogress.ProgressWheel;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 
 public class MainActivity extends AppCompatActivity {
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.fast_scroller) VerticalRecyclerViewFastScroller fastScroller;
-    @Bind(R.id.progress) ProgressWheel progressWheel;
-    @Bind(R.id.noResults) LinearLayout noResult;
-    @Bind(R.id.pull_to_refresh) PullToRefreshView pullToRefreshView;
-    RecyclerView recyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.fast_scroller) VerticalRecyclerViewFastScroller fastScroller;
+    @BindView(R.id.progress) ProgressWheel progressWheel;
+    @BindView(R.id.noResults) LinearLayout noResult;
+    @BindView(R.id.pull_to_refresh) PullToRefreshView pullToRefreshView;
+    @BindView(R.id.numList) RecyclerView recyclerView;
+
+    private AppPreferences appPreferences;
 
     private Activity activity;
     private Context context;
+    private Drawer drawer;
+    private NumberAdapter numberAdapter;
+    private NumberAdapter favoriteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         this.activity = this;
         this.context = this;
@@ -44,14 +56,19 @@ public class MainActivity extends AppCompatActivity {
         checkAndAddPermission(activity);
         setAppDir();
 
+        pullToRefreshView.setEnabled(false);
 
-        recyclerView = (RecyclerView) findViewById(R.id.numList);
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-//        pullToRefreshView.setEnabled(false);
+//        drawer = UtilsUI.setNavigationDraer((Activity) context, context, toolbar, numberAdapter, favoriteAdapter, recyclerView);
+
+        progressWheel.setBarColor(appPreferences.getPrimaryColorPref());
+        progressWheel.setVisibility(View.VISIBLE);
+
     }
 
     private void setInitialConfiguration(){
